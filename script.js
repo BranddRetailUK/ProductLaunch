@@ -66,7 +66,7 @@ function startCountdown(launchTime) {
       return;
     }
 
-    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const hours = Math.floor(distance / (1000 * 60 * 60));
     const minutes = Math.floor((distance / (1000 * 60)) % 60);
     const seconds = Math.floor((distance / 1000) % 60);
     hoursEl.textContent = String(hours).padStart(2, "0");
