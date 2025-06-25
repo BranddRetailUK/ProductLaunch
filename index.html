@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Launch</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <audio id="bg-music" src="ambient.mp3" preload="auto" loop></audio>
+
+  <div class="overlay">
+    <div class="container">
+      <img src="logo.png" alt="Logo" class="logo" />
+      <h1 class="headline">The OG Hoodie Launch</h1>
+
+      <div id="countdown" class="countdown">
+        <div class="countdown-block">
+          <span id="hours">00</span>
+          <label>HOURS</label>
+        </div>
+        <div class="colon">:</div>
+        <div class="countdown-block">
+          <span id="minutes">00</span>
+          <label>MINUTES</label>
+        </div>
+        <div class="colon">:</div>
+        <div class="countdown-block">
+          <span id="seconds">00</span>
+          <label>SECONDS</label>
+        </div>
+      </div>
+
+      <div id="quote-wrapper">
+        <div class="quote-placeholder" id="quote-placeholder"></div>
+      </div>
+
+      <form id="signup-form">
+        <input type="email" placeholder="Enter Email" required />
+        <button type="submit">Notify Me</button>
+      </form>
+
+      <!-- Shopify Product Container -->
+      <div id="product-section">
+        <!-- Buy Button will be injected here -->
+      </div>
+    </div>
+
+    <!-- Appears on countdown end -->
+    <div id="buy-now-wrapper" class="hidden"></div>
+  </div>
+
+  <script src="particles.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
