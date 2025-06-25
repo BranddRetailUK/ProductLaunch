@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle, #73d6ff, #40a3ff);
+      color: #1c1c1c;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+      color: #ffffff;
+    }
+
+    input[type="datetime-local"],
+    input[type="text"] {
+      font-size: 1rem;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin: 10px;
+      width: 250px;
+    }
+
+    label {
+      font-size: 1rem;
+      margin: 10px 0;
+      display: block;
+      color: #ffffff;
+    }
+
+    button {
+      background-color: #ffffff;
+      color: #1c1c1c;
+      font-size: 1.2rem;
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      margin: 10px;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Set Launch Time</h1>
+
+  <input type="datetime-local" id="datetime" />
+
+  <h2 style="margin-top: 30px;">Music Settings</h2>
+  <label>
+    <input type="checkbox" id="musicEnabled" checked />
+    Enable Background Music
+  </label>
+  <label>
+    Music File:
+    <input type="text" id="musicSrc" placeholder="ambient.mp3 or full URL" />
+  </label>
+
+  <div>
+    <button onclick="submitLaunchTime()">Save Time</button>
+    <button onclick="triggerTestLaunch()">Test Launch (3s)</button>
+  </div>
+
+  <script>
+    function getMusicSettings() {
+      return {
+        musicEnabled: document.getElementById("musicEnabled").checked,
+        musicSrc: document.getElementById("musicSrc").value
+      };
+    }
+
+    function submitLaunchTime() {
+      const input = document.getElementById("datetime").value;
+      const timestamp = new Date(input).getTime();
+
+      const { musicEnabled, musicSrc } = getMusicSettings();
+
+      fetch("/update-launch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ launchTimestamp: timestamp, musicEnabled, musicSrc })
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg));
+    }
+
+    function triggerTestLaunch() {
+      const now = Date.now();
+      const testTimestamp = now + 3000;
+
+      const { musicEnabled, musicSrc } = getMusicSettings();
+
+      fetch("/update-launch", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ launchTimestamp: testTimestamp, musicEnabled, musicSrc })
+      })
+      .then(res => res.text())
+      .then(msg => alert(msg));
+    }
+  </script>
+</body>
+</html>
