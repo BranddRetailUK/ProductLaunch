@@ -6,11 +6,7 @@
   "scripts": {
     "start": "node server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "express": "^5.1.0",
-    "serve": "^14.2.4"
+    "express": "^4.19.2"
   }
 }
