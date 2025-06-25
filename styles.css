@@ -436,30 +436,36 @@ button:hover {
 
 
 @media (max-width: 600px) {
+  #countdown {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    padding: 20px 30px;
+    margin-top: 20px;
+    display: flex;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    transition: none;
+    will-change: transform;
+  }
 
-  .countdown {
-  display: flex;
-  font-weight: bold;
-  justify-content: center;
-  align-items: center;
-  gap: -20px; /* reduce from 20px or more if used */
-  margin-bottom: 8px;
-}
+  .countdown-block {
+    margin: 0;
+    padding: 0;
+  }
 
-.countdown-block {
-  margin: -10px;
-  padding: -40px;
-}
+  .countdown-block span {
+    font-size: 2.2rem;
+    margin: 0;
+  }
 
-.countdown-block span {
-  font-size: 2.2rem;
-  margin: 0;
-}
-
-.countdown-block label {
-  font-size: 0.7rem;
-  margin-top: 2px;
-  line-height: 1;
-}
-
+  .countdown-block label {
+    font-size: 0.7rem;
+    margin-top: 2px;
+    line-height: 1;
+  }
 }
