@@ -405,3 +405,29 @@ button:hover {
   transition: transform 1s ease-in, opacity 20s ease-in;
 }
 
+@media (max-width: 600px) {
+  .countdown {
+    transform: translateY(-20px);
+  }
+
+  .countdown-block span {
+    font-size: 2rem;
+  }
+
+  .countdown-block label {
+    font-size: 0.75rem;
+  }
+
+  .headline {
+    margin-top: 0px;
+  }
+
+  .logo {
+    margin-top: -20px;
+    max-width: 80%;
+  }
+
+  #quote-wrapper {
+    transform: translateY(-10px);
+  }
+}
