@@ -431,3 +431,32 @@ button:hover {
     transform: translateY(-10px);
   }
 }
+
+
+@media (max-width: 600px) {
+
+  .countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: -20px; /* reduce from 20px or more if used */
+  margin-bottom: 8px;
+}
+
+.countdown-block {
+  margin: -10px;
+  padding: -40px;
+}
+
+.countdown-block span {
+  font-size: 2.2rem;
+  margin: 0;
+}
+
+.countdown-block label {
+  font-size: 0.7rem;
+  margin-top: 2px;
+  line-height: 1;
+}
+
+}
