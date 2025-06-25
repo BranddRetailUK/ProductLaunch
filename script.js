@@ -142,10 +142,65 @@ function loadShopifyBuyButton() {
   document.head.appendChild(script);
 }
 
-// Fetch launch time from config.json
 fetch("/config.json")
   .then((res) => res.json())
   .then((data) => {
     const launchTime = isTestMode ? Date.now() + 3000 : data.launchTimestamp;
     startCountdown(launchTime);
+
+    if (data.musicEnabled && data.musicSrc) {
+      const bgMusic = document.getElementById("bg-music");
+      if (bgMusic) {
+        bgMusic.src = data.musicSrc;
+        bgMusic.volume = 0.2;
+        ["click", "touchstart"].forEach((event) => {
+          window.addEventListener(
+            event,
+            () => {
+              if (bgMusic.paused) {
+                bgMusic.volume = 0;
+                bgMusic.play().then(() => {
+                  setTimeout(() => {
+                    bgMusic.volume = 0.2;
+                  }, 100);
+                }).catch(() => {});
+              }
+            },
+            { once: true }
+          );
+        });
+      }
+    }
+
+    // ✅ Add manual test trigger button if enabled
+    if (data.showManualTestButton) {
+      const testBtn = document.createElement("button");
+      testBtn.textContent = "Trigger 5s Countdown";
+      testBtn.style.position = "fixed";
+      testBtn.style.bottom = "20px";
+      testBtn.style.right = "20px";
+      testBtn.style.padding = "12px 20px";
+      testBtn.style.fontSize = "1rem";
+      testBtn.style.zIndex = 9999;
+      testBtn.style.borderRadius = "8px";
+      testBtn.style.background = "#fff";
+      testBtn.style.border = "none";
+      testBtn.style.cursor = "pointer";
+      testBtn.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
+
+      testBtn.onclick = () => {
+        fetch("/update-launch", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            launchTimestamp: Date.now() + 5000,
+            musicEnabled: data.musicEnabled,
+            musicSrc: data.musicSrc,
+            showManualTestButton: data.showManualTestButton
+          })
+        }).then(() => location.reload());
+      };
+
+      document.body.appendChild(testBtn);
+    }
   });

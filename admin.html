@@ -69,7 +69,13 @@
   </label>
   <label>
     Music File:
-    <input type="text" id="musicSrc" placeholder="Upload Mp3" />
+    <input type="text" id="musicSrc" placeholder="ambient.mp3 or full URL" />
+  </label>
+
+  <h2>Manual Trigger</h2>
+  <label>
+    <input type="checkbox" id="showManualTestButton" />
+    Show Manual Countdown Trigger on Launch Page
   </label>
 
   <div>
@@ -78,23 +84,28 @@
   </div>
 
   <script>
-    function getMusicSettings() {
+    function getSettings() {
       return {
         musicEnabled: document.getElementById("musicEnabled").checked,
-        musicSrc: document.getElementById("musicSrc").value
+        musicSrc: document.getElementById("musicSrc").value,
+        showManualTestButton: document.getElementById("showManualTestButton").checked
       };
     }
 
     function submitLaunchTime() {
       const input = document.getElementById("datetime").value;
       const timestamp = new Date(input).getTime();
-
-      const { musicEnabled, musicSrc } = getMusicSettings();
+      const { musicEnabled, musicSrc, showManualTestButton } = getSettings();
 
       fetch("/update-launch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ launchTimestamp: timestamp, musicEnabled, musicSrc })
+        body: JSON.stringify({
+          launchTimestamp: timestamp,
+          musicEnabled,
+          musicSrc,
+          showManualTestButton
+        })
       })
       .then(res => res.text())
       .then(msg => alert(msg));
@@ -103,13 +114,17 @@
     function triggerTestLaunch() {
       const now = Date.now();
       const testTimestamp = now + 3000;
-
-      const { musicEnabled, musicSrc } = getMusicSettings();
+      const { musicEnabled, musicSrc, showManualTestButton } = getSettings();
 
       fetch("/update-launch", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ launchTimestamp: testTimestamp, musicEnabled, musicSrc })
+        body: JSON.stringify({
+          launchTimestamp: testTimestamp,
+          musicEnabled,
+          musicSrc,
+          showManualTestButton
+        })
       })
       .then(res => res.text())
       .then(msg => alert(msg));
