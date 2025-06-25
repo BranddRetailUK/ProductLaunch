@@ -44,7 +44,7 @@ body {
 
 .logo {
   width: 250px;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   animation: pulse 3s infinite;
 }
 
@@ -83,6 +83,7 @@ body {
 .countdown label {
   margin-top: 5px;
   font-size: 0.8rem;
+  font-family: 'Orbitron', serif;
   color: #aaa;
 }
 
@@ -197,6 +198,7 @@ button:hover {
 #countdown {
   display: flex;
   justify-content: center;
+  font-family: 'Orbitron', serif;
   align-items: center;
   gap: 30px;
   background-color: rgba(255, 255, 255, 0.05);
@@ -221,11 +223,12 @@ button:hover {
 
 .countdown-block label {
   font-family: 'Orbitron', serif;
+  font-weight: bold;
   font-size: 1.1rem;
   font-weight: bold;
   letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: 8px;
+  margin-top: 6px;
   color: #1c1c1c;
 }
 
@@ -437,6 +440,7 @@ button:hover {
 
   .countdown {
   display: flex;
+  font-weight: bold;
   justify-content: center;
   align-items: center;
   gap: -20px; /* reduce from 20px or more if used */
