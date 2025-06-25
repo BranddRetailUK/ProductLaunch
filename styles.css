@@ -198,11 +198,10 @@ button:hover {
 #countdown {
   display: flex;
   justify-content: center;
-  font-family: 'Orbitron', serif;
   align-items: center;
   gap: 30px;
-  background-color: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(4px);
   padding: 30px 50px;
   border-radius: 20px;
   margin-top: 40px;
