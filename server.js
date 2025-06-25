@@ -8,33 +8,46 @@ const PORT = process.env.PORT || 8000;
 app.use(express.static(path.join(__dirname)));
 app.use(express.json());
 
-// Serve config file
+// ✅ Serve config.json
 app.get("/config.json", (req, res) => {
   res.sendFile(path.join(__dirname, "config.json"));
 });
 
-// Admin panel post route to update launch time
+// ✅ Explicit route for admin panel
+app.get("/admin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "admin.html"));
+});
+
+// ✅ POST route to update launch + music config
 app.post("/update-launch", (req, res) => {
-  const { launchTimestamp } = req.body;
+  const { launchTimestamp, musicEnabled, musicSrc, showManualTestButton } = req.body;
+
   if (!launchTimestamp) {
     return res.status(400).send("Missing launch timestamp");
   }
 
-  const configPath = path.join(__dirname, "config.json");
-  fs.writeFile(configPath, JSON.stringify({ launchTimestamp }), (err) => {
+  const config = {
+    launchTimestamp,
+    musicEnabled: !!musicEnabled,
+    musicSrc: musicSrc || "",
+    showManualTestButton: !!showManualTestButton
+  };
+
+  fs.writeFile("config.json", JSON.stringify(config), (err) => {
     if (err) {
       console.error("Failed to write config:", err);
-      return res.status(500).send("Failed to update launch time");
+      return res.status(500).send("Failed to update config");
     }
-    res.send("Launch time updated successfully");
+    res.send("Launch config updated successfully");
   });
 });
 
-// Fallback to index.html
+// ✅ Fallback route to index.html
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// ✅ Start server
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
