@@ -78,6 +78,27 @@ function startCountdown(launchTime) {
   updateCountdown();
 }
 
+const bgMusic = document.getElementById("bg-music");
+bgMusic.volume = 0.2;
+["click", "touchstart"].forEach((event) => {
+  window.addEventListener(
+    event,
+    () => {
+      if (bgMusic.paused) {
+        bgMusic.volume = 0;
+        bgMusic.play().then(() => {
+          setTimeout(() => {
+            bgMusic.volume = 0.2;
+          }, 100);
+        }).catch(() => {});
+      }
+    },
+    { once: true }
+  );
+});
+
+particlesJS.load("particles-js", "particles.json");
+
 function ShopifyBuyInit() {
   const client = ShopifyBuy.buildClient({
     domain: "ggappareluk.myshopify.com",
@@ -121,32 +142,10 @@ function loadShopifyBuyButton() {
   document.head.appendChild(script);
 }
 
-// Fetch launch time + music config
+// Fetch launch time from config.json
 fetch("/config.json")
-  .then(res => res.json())
-  .then(data => {
+  .then((res) => res.json())
+  .then((data) => {
     const launchTime = isTestMode ? Date.now() + 3000 : data.launchTimestamp;
     startCountdown(launchTime);
-
-    if (data.musicEnabled && data.musicSrc) {
-      const bgMusic = document.getElementById("bg-music");
-      bgMusic.src = data.musicSrc;
-      bgMusic.volume = 0.2;
-      ["click", "touchstart"].forEach((event) => {
-        window.addEventListener(
-          event,
-          () => {
-            if (bgMusic.paused) {
-              bgMusic.volume = 0;
-              bgMusic.play().then(() => {
-                setTimeout(() => {
-                  bgMusic.volume = 0.2;
-                }, 100);
-              }).catch(() => {});
-            }
-          },
-          { once: true }
-        );
-      });
-    }
   });
