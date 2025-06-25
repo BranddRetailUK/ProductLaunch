@@ -437,10 +437,8 @@ button:hover {
 
 @media (max-width: 600px) {
   #countdown {
-    background-color: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
     border-radius: 20px;
     padding: 20px 30px;
     margin-top: 20px;
@@ -449,6 +447,7 @@ button:hover {
     justify-content: center;
     align-items: center;
     gap: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: none;
     will-change: transform;
   }
