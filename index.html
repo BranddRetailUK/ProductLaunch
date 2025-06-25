@@ -7,6 +7,54 @@
   <link rel="stylesheet" href="styles.css" />
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
   <script src="https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js"></script>
+  <style>
+    .headline {
+      text-align: center;
+      font-size: 2.8rem;
+      font-weight: 600;
+      margin-top: 40px;
+      position: relative;
+      z-index: 2;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .headline span {
+      opacity: 0;
+      transform: scale(0.8);
+      display: inline-block;
+      animation: typeIn 0.4s ease-out forwards;
+    }
+
+    @keyframes typeIn {
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Staggered animation delays from center outward */
+    .headline span:nth-child(11) { animation-delay: 0s; }
+    .headline span:nth-child(10),
+    .headline span:nth-child(12) { animation-delay: 0.05s; }
+    .headline span:nth-child(9),
+    .headline span:nth-child(13) { animation-delay: 0.1s; }
+    .headline span:nth-child(8),
+    .headline span:nth-child(14) { animation-delay: 0.15s; }
+    .headline span:nth-child(7),
+    .headline span:nth-child(15) { animation-delay: 0.2s; }
+    .headline span:nth-child(6),
+    .headline span:nth-child(16) { animation-delay: 0.25s; }
+    .headline span:nth-child(5),
+    .headline span:nth-child(17) { animation-delay: 0.3s; }
+    .headline span:nth-child(4),
+    .headline span:nth-child(18) { animation-delay: 0.35s; }
+    .headline span:nth-child(3),
+    .headline span:nth-child(19) { animation-delay: 0.4s; }
+    .headline span:nth-child(2),
+    .headline span:nth-child(20) { animation-delay: 0.45s; }
+    .headline span:nth-child(1),
+    .headline span:nth-child(21) { animation-delay: 0.5s; }
+  </style>
 </head>
 <body>
   <div id="particles-js"></div>
@@ -16,7 +64,14 @@
   <div class="overlay">
     <div class="container">
       <img src="logo.png" alt="Logo" class="logo" />
-      <h1 class="headline">The OG Hoodie Launch</h1>
+
+      <!-- Updated animated headline -->
+      <h1 class="headline">
+        <span>T</span><span>h</span><span>e</span><span> </span>
+        <span>O</span><span>G</span><br />
+        <span>H</span><span>o</span><span>o</span><span>d</span><span>i</span><span>e</span><span> </span>
+        <span>L</span><span>a</span><span>u</span><span>n</span><span>c</span><span>h</span>
+      </h1>
 
       <div id="countdown" class="countdown">
         <div class="countdown-block">
@@ -38,8 +93,6 @@
       <div id="quote-wrapper">
         <div class="quote-placeholder" id="quote-placeholder"></div>
       </div>
-
-      
 
       <!-- Shopify Product Container -->
       <div id="product-section">
