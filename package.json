@@ -4,7 +4,7 @@
   "description": "Static product launch countdown landing page",
   "main": "index.html",
   "scripts": {
-    "start": "serve . -l $PORT"
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
