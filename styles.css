@@ -409,8 +409,9 @@ button:hover {
 .fade-slide-up.logo {
   opacity: 0;
   transform: translateY(100px);
-  transition: transform 1s ease-in, opacity 20s ease-in;
+  transition: transform 6s ease-in, opacity 60s ease-in;
 }
+
 
 @media (max-width: 600px) {
   .countdown {
@@ -497,5 +498,11 @@ button:hover {
   box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* stronger glow */
 }
 
+@media (max-width: 600px) {
+  .bubble {
+    width: 70px;
+    height: 70px;
+  }
+}
 
 

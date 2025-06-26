@@ -66,6 +66,14 @@ function startCountdown(launchTime) {
       return;
     }
 
+    const secondsLeft = Math.floor(distance / 1000);
+
+    // ✅ Start popping bubbles in final 10 seconds
+    if (secondsLeft <= 10 && secondsLeft > 0 && !window._bubblesStartedPopping) {
+      window._bubblesStartedPopping = true;
+      popBubblesOverTime();
+    }
+
     const hours = Math.floor(distance / (1000 * 60 * 60));
     const minutes = Math.floor((distance / (1000 * 60)) % 60);
     const seconds = Math.floor((distance / 1000) % 60);
@@ -204,8 +212,7 @@ fetch("/config.json")
     }
   });
 
-
-// ✅ Bubble motion + collision + squish
+// ✅ Animate bubbles
 const bubbles = Array.from(document.querySelectorAll('.bubble'));
 const size = 120;
 const speed = 0.8;
@@ -222,15 +229,13 @@ const bubbleStates = bubbles.map(bubble => ({
 function squish(el) {
   el.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
   el.style.transform = 'scale(1.1, 0.9)';
-  el.style.boxShadow = '0 0 40px rgba(255, 255, 255, 0.9)'; // strong pulse glow
+  el.style.boxShadow = '0 0 40px rgba(255, 255, 255, 0.9)';
 
   setTimeout(() => {
     el.style.transform = 'scale(1, 1)';
-    el.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.35)'; // restore glow
+    el.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.35)';
   }, 150);
 }
-
-
 
 function animateBubbles() {
   bubbleStates.forEach((b1, i) => {
@@ -249,31 +254,28 @@ function animateBubbles() {
       const distance = Math.sqrt(dx * dx + dy * dy);
 
       if (distance < size) {
-  // Swap directions
-  [b1.dx, b2.dx] = [b2.dx, b1.dx];
-  [b1.dy, b2.dy] = [b2.dy, b1.dy];
+        [b1.dx, b2.dx] = [b2.dx, b1.dx];
+        [b1.dy, b2.dy] = [b2.dy, b1.dy];
 
-  // Push them apart to avoid sticking
-  const overlap = (size - distance) / 2;
-  const angle = Math.atan2(dy, dx);
-  const offsetX = Math.cos(angle) * overlap;
-  const offsetY = Math.sin(angle) * overlap;
+        const overlap = (size - distance) / 2;
+        const angle = Math.atan2(dy, dx);
+        const offsetX = Math.cos(angle) * overlap;
+        const offsetY = Math.sin(angle) * overlap;
 
-  b1.x += offsetX;
-  b1.y += offsetY;
-  b2.x -= offsetX;
-  b2.y -= offsetY;
+        b1.x += offsetX;
+        b1.y += offsetY;
+        b2.x -= offsetX;
+        b2.y -= offsetY;
 
-  if (b1.cooldown === 0) {
-    squish(b1.el);
-    b1.cooldown = 10;
-  }
-  if (b2.cooldown === 0) {
-    squish(b2.el);
-    b2.cooldown = 10;
-  }
-}
-
+        if (b1.cooldown === 0) {
+          squish(b1.el);
+          b1.cooldown = 10;
+        }
+        if (b2.cooldown === 0) {
+          squish(b2.el);
+          b2.cooldown = 10;
+        }
+      }
     });
 
     b1.el.style.left = `${b1.x}px`;
@@ -284,3 +286,27 @@ function animateBubbles() {
 }
 
 animateBubbles();
+
+// ✅ Pop bubbles from 10s to 0s
+function popBubblesOverTime() {
+  const bubbles = Array.from(document.querySelectorAll(".bubble"));
+  let index = 0;
+
+  function popNext() {
+    if (index >= bubbles.length) return;
+
+    const bubble = bubbles[index];
+    bubble.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+    bubble.style.transform = "scale(1.5)";
+    bubble.style.opacity = "0";
+
+    setTimeout(() => {
+      bubble.remove();
+    }, 300);
+
+    index++;
+    setTimeout(popNext, 1000);
+  }
+
+  popNext();
+}
