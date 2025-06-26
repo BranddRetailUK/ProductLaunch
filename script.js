@@ -49,6 +49,9 @@ function startCountdown(launchTime) {
       clearInterval(timerInterval);
       subtlyEnhanceParticles();
 
+      countdownEl?.classList.remove("countdown-flash");
+      document.body.classList.remove("shake-screen");
+
       countdownEl?.classList.add("fade-out");
       headlineEl?.classList.add("fade-slide-up", "headline");
       logoEl?.classList.add("fade-slide-up", "logo");
@@ -68,8 +71,15 @@ function startCountdown(launchTime) {
 
     const secondsLeft = Math.floor(distance / 1000);
 
-    // ✅ Start popping bubbles in final 10 seconds
-    if (secondsLeft <= 10 && secondsLeft > 0 && !window._bubblesStartedPopping) {
+    if (secondsLeft <= 10 && !countdownEl.classList.contains("countdown-flash")) {
+      countdownEl.classList.add("countdown-flash");
+    }
+
+    if (secondsLeft <= 5 && !document.body.classList.contains("shake-screen")) {
+      document.body.classList.add("shake-screen");
+    }
+
+    if (secondsLeft <= 20 && secondsLeft > 0 && !window._bubblesStartedPopping) {
       window._bubblesStartedPopping = true;
       popBubblesOverTime();
     }
@@ -153,7 +163,7 @@ function loadShopifyBuyButton() {
 fetch("/config.json")
   .then((res) => res.json())
   .then((data) => {
-    const launchTime = isTestMode ? Date.now() + 3000 : data.launchTimestamp;
+    const launchTime = isTestMode ? Date.now() + 15000 : data.launchTimestamp;
     startCountdown(launchTime);
 
     if (data.musicEnabled && data.musicSrc) {
@@ -182,7 +192,7 @@ fetch("/config.json")
 
     if (data.showManualTestButton) {
       const testBtn = document.createElement("button");
-      testBtn.textContent = "Trigger 5s Countdown";
+      testBtn.textContent = "Trigger 12s Countdown";
       testBtn.style.position = "fixed";
       testBtn.style.bottom = "20px";
       testBtn.style.right = "20px";
@@ -200,7 +210,7 @@ fetch("/config.json")
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            launchTimestamp: Date.now() + 5000,
+            launchTimestamp: Date.now() + 12000,
             musicEnabled: data.musicEnabled,
             musicSrc: data.musicSrc,
             showManualTestButton: data.showManualTestButton
@@ -212,9 +222,7 @@ fetch("/config.json")
     }
   });
 
-// ... (unchanged code above) ...
-
-// ✅ Animate bubbles
+// ==== BUBBLE ANIMATION ====
 const bubbles = Array.from(document.querySelectorAll('.bubble'));
 const speed = 0.8;
 
@@ -228,14 +236,13 @@ const bubbleStates = bubbles.map(bubble => ({
 }));
 
 function getSize(el) {
-  return el.offsetWidth; // assumes width = height
+  return el.offsetWidth;
 }
 
 function squish(el) {
   el.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
   el.style.transform = 'scale(1.1, 0.9)';
   el.style.boxShadow = '0 0 40px rgba(255, 255, 255, 0.9)';
-
   setTimeout(() => {
     el.style.transform = 'scale(1, 1)';
     el.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.35)';
@@ -297,7 +304,6 @@ function animateBubbles() {
 
 animateBubbles();
 
-// ✅ Pop bubbles from 10s to 0s
 function popBubblesOverTime() {
   const bubbles = Array.from(document.querySelectorAll(".bubble"));
   let index = 0;
@@ -315,7 +321,7 @@ function popBubblesOverTime() {
     }, 300);
 
     index++;
-    setTimeout(popNext, 1000);
+    setTimeout(popNext, 800);
   }
 
   popNext();
