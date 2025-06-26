@@ -42,55 +42,63 @@ function startCountdown(launchTime) {
   }
 
   function updateCountdown() {
-    const now = Date.now();
-    const distance = launchTime - now;
+  const now = Date.now();
+  const distance = launchTime - now;
 
-    if (distance <= 0) {
-      clearInterval(timerInterval);
-      subtlyEnhanceParticles();
+  if (distance <= 0) {
+    clearInterval(timerInterval);
+    subtlyEnhanceParticles();
 
-      countdownEl?.classList.remove("countdown-flash");
-      document.body.classList.remove("shake-screen");
+    countdownEl?.classList.remove("countdown-flash");
+    document.body.classList.remove("shake-screen");
 
-      countdownEl?.classList.add("fade-out");
-      headlineEl?.classList.add("fade-slide-up", "headline");
-      logoEl?.classList.add("fade-slide-up", "logo");
+    // ✅ POP countdown on zero
+    countdownEl?.classList.add("countdown-pop");
 
-      quoteWrapper?.classList.add("fade-out");
-      setTimeout(() => {
-        quoteWrapper?.classList.add("hidden");
-      }, 1000);
+    // Optional: remove it from DOM after pop
+    setTimeout(() => {
+      countdownEl?.remove();
+    }, 600);
 
-      setTimeout(() => {
-        buyNowWrapper?.classList.remove("hidden");
-        buyNowWrapper?.classList.add("visible");
-        loadShopifyBuyButton();
-      }, 1200);
-      return;
-    }
+    headlineEl?.classList.add("fade-slide-up", "headline");
+    logoEl?.classList.add("fade-slide-up", "logo");
 
-    const secondsLeft = Math.floor(distance / 1000);
+    quoteWrapper?.classList.add("fade-out");
+    setTimeout(() => {
+      quoteWrapper?.classList.add("hidden");
+    }, 1000);
 
-    if (secondsLeft <= 10 && !countdownEl.classList.contains("countdown-flash")) {
-      countdownEl.classList.add("countdown-flash");
-    }
-
-    if (secondsLeft <= 5 && !document.body.classList.contains("shake-screen")) {
-      document.body.classList.add("shake-screen");
-    }
-
-    if (secondsLeft <= 20 && secondsLeft > 0 && !window._bubblesStartedPopping) {
-      window._bubblesStartedPopping = true;
-      popBubblesOverTime();
-    }
-
-    const hours = Math.floor(distance / (1000 * 60 * 60));
-    const minutes = Math.floor((distance / (1000 * 60)) % 60);
-    const seconds = Math.floor((distance / 1000) % 60);
-    hoursEl.textContent = String(hours).padStart(2, "0");
-    minutesEl.textContent = String(minutes).padStart(2, "0");
-    secondsEl.textContent = String(seconds).padStart(2, "0");
+    setTimeout(() => {
+      buyNowWrapper?.classList.remove("hidden");
+      buyNowWrapper?.classList.add("visible");
+      loadShopifyBuyButton();
+    }, 1200);
+    return;
   }
+
+  const secondsLeft = Math.floor(distance / 1000);
+
+  if (secondsLeft <= 10 && !countdownEl.classList.contains("countdown-flash")) {
+    countdownEl.classList.add("countdown-flash");
+  }
+
+  if (secondsLeft <= 5 && !document.body.classList.contains("shake-screen")) {
+    document.body.classList.add("shake-screen");
+  }
+
+  if (secondsLeft <= 20 && secondsLeft > 0 && !window._bubblesStartedPopping) {
+    window._bubblesStartedPopping = true;
+    popBubblesOverTime();
+  }
+
+  const hours = Math.floor(distance / (1000 * 60 * 60));
+  const minutes = Math.floor((distance / (1000 * 60)) % 60);
+  const seconds = Math.floor((distance / 1000) % 60);
+  hoursEl.textContent = String(hours).padStart(2, "0");
+  minutesEl.textContent = String(minutes).padStart(2, "0");
+  secondsEl.textContent = String(seconds).padStart(2, "0");
+}
+
 
   const timerInterval = setInterval(updateCountdown, 1000);
   updateCountdown();
