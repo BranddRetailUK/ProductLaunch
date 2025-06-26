@@ -172,7 +172,6 @@ fetch("/config.json")
       }
     }
 
-    // ✅ Add manual test trigger button if enabled
     if (data.showManualTestButton) {
       const testBtn = document.createElement("button");
       testBtn.textContent = "Trigger 5s Countdown";
@@ -204,3 +203,84 @@ fetch("/config.json")
       document.body.appendChild(testBtn);
     }
   });
+
+
+// ✅ Bubble motion + collision + squish
+const bubbles = Array.from(document.querySelectorAll('.bubble'));
+const size = 120;
+const speed = 0.8;
+
+const bubbleStates = bubbles.map(bubble => ({
+  el: bubble,
+  x: Math.random() * (window.innerWidth - size),
+  y: Math.random() * (window.innerHeight - size),
+  dx: (Math.random() - 0.5) * speed * 2,
+  dy: (Math.random() - 0.5) * speed * 2,
+  cooldown: 0
+}));
+
+function squish(el) {
+  el.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
+  el.style.transform = 'scale(1.1, 0.9)';
+  el.style.boxShadow = '0 0 40px rgba(255, 255, 255, 0.9)'; // strong pulse glow
+
+  setTimeout(() => {
+    el.style.transform = 'scale(1, 1)';
+    el.style.boxShadow = '0 0 15px rgba(255, 255, 255, 0.35)'; // restore glow
+  }, 150);
+}
+
+
+
+function animateBubbles() {
+  bubbleStates.forEach((b1, i) => {
+    b1.x += b1.dx;
+    b1.y += b1.dy;
+
+    if (b1.x <= 0 || b1.x >= window.innerWidth - size) b1.dx *= -1;
+    if (b1.y <= 0 || b1.y >= window.innerHeight - size) b1.dy *= -1;
+
+    if (b1.cooldown > 0) b1.cooldown--;
+
+    bubbleStates.forEach((b2, j) => {
+      if (i >= j) return;
+      const dx = b1.x - b2.x;
+      const dy = b1.y - b2.y;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (distance < size) {
+  // Swap directions
+  [b1.dx, b2.dx] = [b2.dx, b1.dx];
+  [b1.dy, b2.dy] = [b2.dy, b1.dy];
+
+  // Push them apart to avoid sticking
+  const overlap = (size - distance) / 2;
+  const angle = Math.atan2(dy, dx);
+  const offsetX = Math.cos(angle) * overlap;
+  const offsetY = Math.sin(angle) * overlap;
+
+  b1.x += offsetX;
+  b1.y += offsetY;
+  b2.x -= offsetX;
+  b2.y -= offsetY;
+
+  if (b1.cooldown === 0) {
+    squish(b1.el);
+    b1.cooldown = 10;
+  }
+  if (b2.cooldown === 0) {
+    squish(b2.el);
+    b2.cooldown = 10;
+  }
+}
+
+    });
+
+    b1.el.style.left = `${b1.x}px`;
+    b1.el.style.top = `${b1.y}px`;
+  });
+
+  requestAnimationFrame(animateBubbles);
+}
+
+animateBubbles();

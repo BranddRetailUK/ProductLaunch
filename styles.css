@@ -26,7 +26,7 @@ body {
 .overlay {
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(1.4px);
+  backdrop-filter: blur(1px);
   position: absolute;
   top: 0;
   left: 0;
@@ -200,13 +200,18 @@ button:hover {
   justify-content: center;
   align-items: center;
   gap: 30px;
-  background-color: rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(4px);
+  background-color: rgba(255, 255, 255, 0.1); /* ensure semi-transparency */
+  backdrop-filter: blur(10px); /* realistic strong blur */
+  -webkit-backdrop-filter: blur(10px); /* Safari support */
   padding: 30px 50px;
   border-radius: 20px;
   margin-top: 40px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  position: relative; /* ensure stacking */
+  z-index: 2; /* above bubbles */
+  isolation: isolate; /* enables proper backdrop rendering */
 }
+
 
 .countdown-block {
   display: flex;
@@ -468,3 +473,29 @@ button:hover {
     line-height: 1;
   }
 }
+
+
+#bubble-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0; /* behind main content but above background */
+}
+
+.bubble {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0.8;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); /* stronger glow */
+}
+
+
+

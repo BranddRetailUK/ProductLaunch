@@ -32,7 +32,6 @@
       }
     }
 
-    /* Staggered animation delays from center outward */
     .headline span:nth-child(11) { animation-delay: 0s; }
     .headline span:nth-child(10),
     .headline span:nth-child(12) { animation-delay: 0.05s; }
@@ -59,13 +58,39 @@
 <body>
   <div id="particles-js"></div>
 
+  <!-- ✅ Bubble container with 6 images x 3 each -->
+  <div id="bubble-container">
+    <img src="image1.jpg" class="bubble" />
+    <img src="image1.jpg" class="bubble" />
+    <img src="image1.jpg" class="bubble" />
+
+    <img src="image2.jpg" class="bubble" />
+    <img src="image2.jpg" class="bubble" />
+    <img src="image2.jpg" class="bubble" />
+
+    <img src="image3.jpg" class="bubble" />
+    <img src="image3.jpg" class="bubble" />
+    <img src="image3.jpg" class="bubble" />
+
+    <img src="image4.jpg" class="bubble" />
+    <img src="image4.jpg" class="bubble" />
+    <img src="image4.jpg" class="bubble" />
+
+    <img src="image5.jpg" class="bubble" />
+    <img src="image5.jpg" class="bubble" />
+    <img src="image5.jpg" class="bubble" />
+
+    <img src="image6.jpg" class="bubble" />
+    <img src="image6.jpg" class="bubble" />
+    <img src="image6.jpg" class="bubble" />
+  </div>
+
   <audio id="bg-music" src="ambient.mp3" preload="auto" loop></audio>
 
   <div class="overlay">
     <div class="container">
       <img src="logo.png" alt="Logo" class="logo" />
 
-      <!-- Updated animated headline -->
       <h1 class="headline">
         <span>T</span><span>h</span><span>e</span><span> </span>
         <span>O</span><span>G</span><br />
@@ -94,13 +119,11 @@
         <div class="quote-placeholder" id="quote-placeholder"></div>
       </div>
 
-      <!-- Shopify Product Container -->
       <div id="product-section">
         <!-- Buy Button will be injected here -->
       </div>
     </div>
 
-    <!-- Appears on countdown end -->
     <div id="buy-now-wrapper" class="hidden"></div>
   </div>
 
