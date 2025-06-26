@@ -212,19 +212,24 @@ fetch("/config.json")
     }
   });
 
+// ... (unchanged code above) ...
+
 // ✅ Animate bubbles
 const bubbles = Array.from(document.querySelectorAll('.bubble'));
-const size = 120;
 const speed = 0.8;
 
 const bubbleStates = bubbles.map(bubble => ({
   el: bubble,
-  x: Math.random() * (window.innerWidth - size),
-  y: Math.random() * (window.innerHeight - size),
+  x: Math.random() * (window.innerWidth - bubble.offsetWidth),
+  y: Math.random() * (window.innerHeight - bubble.offsetHeight),
   dx: (Math.random() - 0.5) * speed * 2,
   dy: (Math.random() - 0.5) * speed * 2,
   cooldown: 0
 }));
+
+function getSize(el) {
+  return el.offsetWidth; // assumes width = height
+}
 
 function squish(el) {
   el.style.transition = 'transform 0.15s ease, box-shadow 0.15s ease';
@@ -239,25 +244,30 @@ function squish(el) {
 
 function animateBubbles() {
   bubbleStates.forEach((b1, i) => {
+    const sizeA = getSize(b1.el);
+
     b1.x += b1.dx;
     b1.y += b1.dy;
 
-    if (b1.x <= 0 || b1.x >= window.innerWidth - size) b1.dx *= -1;
-    if (b1.y <= 0 || b1.y >= window.innerHeight - size) b1.dy *= -1;
+    if (b1.x <= 0 || b1.x >= window.innerWidth - sizeA) b1.dx *= -1;
+    if (b1.y <= 0 || b1.y >= window.innerHeight - sizeA) b1.dy *= -1;
 
     if (b1.cooldown > 0) b1.cooldown--;
 
     bubbleStates.forEach((b2, j) => {
       if (i >= j) return;
+
+      const sizeB = getSize(b2.el);
       const dx = b1.x - b2.x;
       const dy = b1.y - b2.y;
       const distance = Math.sqrt(dx * dx + dy * dy);
+      const minDistance = (sizeA + sizeB) / 2;
 
-      if (distance < size) {
+      if (distance < minDistance) {
         [b1.dx, b2.dx] = [b2.dx, b1.dx];
         [b1.dy, b2.dy] = [b2.dy, b1.dy];
 
-        const overlap = (size - distance) / 2;
+        const overlap = (minDistance - distance) / 2;
         const angle = Math.atan2(dy, dx);
         const offsetX = Math.cos(angle) * overlap;
         const offsetY = Math.sin(angle) * overlap;
