@@ -162,80 +162,52 @@ function loadShopifyBuyButton() {
   document.head.appendChild(script);
 }
 
-fetch("/config.json")
-  .then((res) => res.json())
-  .then((data) => {
-    const launchTime = isTestMode ? Date.now() + 15000 : data.launchTimestamp;
-    startCountdown(launchTime);
+// === Randomized Bubble Spawning ===
+const imageSources = [
+  "assets/image1.jpg", "assets/image2.jpg", "assets/image3.jpg", "assets/image4.jpg",
+  "assets/image5.jpg", "assets/image6.jpg", "assets/image7.jpg", "assets/image8.jpg"
+];
 
-    if (data.musicEnabled && data.musicSrc) {
-      const bgMusic = document.getElementById("bg-music");
-      if (bgMusic) {
-        bgMusic.src = data.musicSrc;
-        bgMusic.volume = 0.2;
-        ["click", "touchstart"].forEach((event) => {
-          window.addEventListener(
-            event,
-            () => {
-              if (bgMusic.paused) {
-                bgMusic.volume = 0;
-                bgMusic.play().then(() => {
-                  setTimeout(() => {
-                    bgMusic.volume = 0.2;
-                  }, 100);
-                }).catch(() => {});
-              }
-            },
-            { once: true }
-          );
-        });
-      }
-    }
+let bubbleImages = imageSources.flatMap(src => [src, src]);
 
-    if (data.showManualTestButton) {
-      const testBtn = document.createElement("button");
-      testBtn.textContent = "Trigger 12s Countdown";
-      testBtn.style.position = "fixed";
-      testBtn.style.bottom = "20px";
-      testBtn.style.right = "20px";
-      testBtn.style.padding = "12px 20px";
-      testBtn.style.fontSize = "1rem";
-      testBtn.style.zIndex = 9999;
-      testBtn.style.borderRadius = "8px";
-      testBtn.style.background = "#fff";
-      testBtn.style.border = "none";
-      testBtn.style.cursor = "pointer";
-      testBtn.style.boxShadow = "0 2px 6px rgba(0,0,0,0.15)";
+for (let i = bubbleImages.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [bubbleImages[i], bubbleImages[j]] = [bubbleImages[j], bubbleImages[i]];
+}
 
-      testBtn.onclick = () => {
-        fetch("/update-launch", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            launchTimestamp: Date.now() + 12000,
-            musicEnabled: data.musicEnabled,
-            musicSrc: data.musicSrc,
-            showManualTestButton: data.showManualTestButton
-          })
-        }).then(() => location.reload());
-      };
+const bubbleContainer = document.getElementById("bubble-container");
+bubbleImages.forEach((src) => {
+  const img = document.createElement("img");
+  img.src = src;
+  img.classList.add("bubble");
+  bubbleContainer.appendChild(img);
+});
 
-      document.body.appendChild(testBtn);
-    }
+const speed = 0.8;
+const bubbleStates = [];
+
+requestAnimationFrame(() => {
+  const bubbleElements = Array.from(document.querySelectorAll('.bubble'));
+  bubbleElements.forEach((bubble) => {
+    bubbleStates.push({
+      el: bubble,
+      x: Math.random() * (window.innerWidth - bubble.offsetWidth),
+      y: Math.random() * (window.innerHeight - bubble.offsetHeight),
+      dx: (Math.random() - 0.5) * speed * 2,
+      dy: (Math.random() - 0.5) * speed * 2,
+      cooldown: 0
+    });
   });
 
-// ==== BUBBLE ANIMATION ====
-const bubbles = Array.from(document.querySelectorAll('.bubble'));
-const speed = 0.8;
+  animateBubbles();
 
-const bubbleStates = bubbles.map(bubble => ({
-  el: bubble,
-  x: Math.random() * (window.innerWidth - bubble.offsetWidth),
-  y: Math.random() * (window.innerHeight - bubble.offsetHeight),
-  dx: (Math.random() - 0.5) * speed * 2,
-  dy: (Math.random() - 0.5) * speed * 2,
-  cooldown: 0
-}));
+  fetch("/config.json")
+    .then((res) => res.json())
+    .then((data) => {
+      const launchTime = isTestMode ? Date.now() + 15000 : data.launchTimestamp;
+      startCountdown(launchTime);
+    });
+});
 
 function getSize(el) {
   return el.offsetWidth;
@@ -254,13 +226,11 @@ function squish(el) {
 function animateBubbles() {
   bubbleStates.forEach((b1, i) => {
     const sizeA = getSize(b1.el);
-
     b1.x += b1.dx;
     b1.y += b1.dy;
 
     if (b1.x <= 0 || b1.x >= window.innerWidth - sizeA) b1.dx *= -1;
     if (b1.y <= 0 || b1.y >= window.innerHeight - sizeA) b1.dy *= -1;
-
     if (b1.cooldown > 0) b1.cooldown--;
 
     bubbleStates.forEach((b2, j) => {
@@ -304,8 +274,6 @@ function animateBubbles() {
   requestAnimationFrame(animateBubbles);
 }
 
-animateBubbles();
-
 function popBubblesOverTime() {
   const bubbles = Array.from(document.querySelectorAll(".bubble"));
   let index = 0;
@@ -314,13 +282,18 @@ function popBubblesOverTime() {
     if (index >= bubbles.length) return;
 
     const bubble = bubbles[index];
-    bubble.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-    bubble.style.transform = "scale(1.5)";
-    bubble.style.opacity = "0";
+    bubble.style.transition = "transform 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045), opacity 0.4s ease";
+    bubble.style.transform = "scale(1.3)";
+    bubble.style.opacity = "0.7";
+
+    setTimeout(() => {
+      bubble.style.transform = "scale(0)";
+      bubble.style.opacity = "0";
+    }, 200);
 
     setTimeout(() => {
       bubble.remove();
-    }, 300);
+    }, 500);
 
     index++;
     setTimeout(popNext, 800);
@@ -329,31 +302,42 @@ function popBubblesOverTime() {
   popNext();
 }
 
-// === BUBBLE REPLACEMENT LOGIC (1 every 8s) ===
-const bubbleContainer = document.getElementById("bubble-container");
 const allImagePaths = [
-  "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg",
-  "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
+  "assets/image1.jpg", "assets/image2.jpg", "assets/image3.jpg", "assets/image4.jpg", "assets/image5.jpg",
+  "assets/image6.jpg", "assets/image7.jpg", "assets/image8.jpg", "assets/image9.jpg", "assets/image10.jpg"
 ];
 
-let imageQueueIndex = 5;
+let imageQueueIndex = 0;
 setInterval(() => {
   const activeBubbles = document.querySelectorAll(".bubble");
   if (activeBubbles.length === 0) return;
 
   const bubbleToReplace = activeBubbles[Math.floor(Math.random() * activeBubbles.length)];
-  bubbleToReplace.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-  bubbleToReplace.style.transform = "scale(1.5)";
-  bubbleToReplace.style.opacity = "0";
+  bubbleToReplace.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+  bubbleToReplace.style.transform = "scale(1.3)";
+  bubbleToReplace.style.opacity = "0.7";
 
-  const parent = bubbleToReplace.parentElement;
-  const nextImg = document.createElement("img");
-  nextImg.src = allImagePaths[imageQueueIndex % allImagePaths.length];
-  nextImg.classList.add("bubble");
-  parent.appendChild(nextImg);
-
+  // Step 1: Remove old bubble after fade-out
   setTimeout(() => {
     bubbleToReplace.remove();
+  }, 400);
+
+  // Step 2: Add new bubble after delay
+  setTimeout(() => {
+    const nextImg = document.createElement("img");
+    nextImg.src = allImagePaths[imageQueueIndex % allImagePaths.length];
+    nextImg.classList.add("bubble");
+
+    nextImg.style.opacity = "0";
+    nextImg.style.transform = "scale(0.5)";
+    nextImg.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+
+    bubbleContainer.appendChild(nextImg);
+
+    setTimeout(() => {
+      nextImg.style.opacity = "1";
+      nextImg.style.transform = "scale(1)";
+    }, 20);
 
     bubbleStates.push({
       el: nextImg,
@@ -364,7 +348,8 @@ setInterval(() => {
       cooldown: 0
     });
 
-  }, 300);
+    imageQueueIndex++;
+  }, 2400);
 
-  imageQueueIndex++;
-}, 8000);
+}, 6000);
+
