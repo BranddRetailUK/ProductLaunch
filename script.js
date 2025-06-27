@@ -42,63 +42,57 @@ function startCountdown(launchTime) {
   }
 
   function updateCountdown() {
-  const now = Date.now();
-  const distance = launchTime - now;
+    const now = Date.now();
+    const distance = launchTime - now;
 
-  if (distance <= 0) {
-    clearInterval(timerInterval);
-    subtlyEnhanceParticles();
+    if (distance <= 0) {
+      clearInterval(timerInterval);
+      subtlyEnhanceParticles();
 
-    countdownEl?.classList.remove("countdown-flash");
-    document.body.classList.remove("shake-screen");
+      countdownEl?.classList.remove("countdown-flash");
+      document.body.classList.remove("shake-screen");
 
-    // ✅ POP countdown on zero
-    countdownEl?.classList.add("countdown-pop");
+      countdownEl?.classList.add("countdown-pop");
+      setTimeout(() => countdownEl?.remove(), 600);
 
-    // Optional: remove it from DOM after pop
-    setTimeout(() => {
-      countdownEl?.remove();
-    }, 600);
+      headlineEl?.classList.add("fade-slide-up", "headline");
+      logoEl?.classList.add("fade-slide-up", "logo");
 
-    headlineEl?.classList.add("fade-slide-up", "headline");
-    logoEl?.classList.add("fade-slide-up", "logo");
+      quoteWrapper?.classList.add("fade-out");
+      setTimeout(() => {
+        quoteWrapper?.classList.add("hidden");
+      }, 1000);
 
-    quoteWrapper?.classList.add("fade-out");
-    setTimeout(() => {
-      quoteWrapper?.classList.add("hidden");
-    }, 1000);
+      setTimeout(() => {
+        buyNowWrapper?.classList.remove("hidden");
+        buyNowWrapper?.classList.add("visible");
+        loadShopifyBuyButton();
+      }, 1200);
+      return;
+    }
 
-    setTimeout(() => {
-      buyNowWrapper?.classList.remove("hidden");
-      buyNowWrapper?.classList.add("visible");
-      loadShopifyBuyButton();
-    }, 1200);
-    return;
+    const secondsLeft = Math.floor(distance / 1000);
+
+    if (secondsLeft <= 10 && !countdownEl.classList.contains("countdown-flash")) {
+      countdownEl.classList.add("countdown-flash");
+    }
+
+    if (secondsLeft <= 5 && !document.body.classList.contains("shake-screen")) {
+      document.body.classList.add("shake-screen");
+    }
+
+    if (secondsLeft <= 20 && secondsLeft > 0 && !window._bubblesStartedPopping) {
+      window._bubblesStartedPopping = true;
+      popBubblesOverTime();
+    }
+
+    const hours = Math.floor(distance / (1000 * 60 * 60));
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+    hoursEl.textContent = String(hours).padStart(2, "0");
+    minutesEl.textContent = String(minutes).padStart(2, "0");
+    secondsEl.textContent = String(seconds).padStart(2, "0");
   }
-
-  const secondsLeft = Math.floor(distance / 1000);
-
-  if (secondsLeft <= 10 && !countdownEl.classList.contains("countdown-flash")) {
-    countdownEl.classList.add("countdown-flash");
-  }
-
-  if (secondsLeft <= 5 && !document.body.classList.contains("shake-screen")) {
-    document.body.classList.add("shake-screen");
-  }
-
-  if (secondsLeft <= 20 && secondsLeft > 0 && !window._bubblesStartedPopping) {
-    window._bubblesStartedPopping = true;
-    popBubblesOverTime();
-  }
-
-  const hours = Math.floor(distance / (1000 * 60 * 60));
-  const minutes = Math.floor((distance / (1000 * 60)) % 60);
-  const seconds = Math.floor((distance / 1000) % 60);
-  hoursEl.textContent = String(hours).padStart(2, "0");
-  minutesEl.textContent = String(minutes).padStart(2, "0");
-  secondsEl.textContent = String(seconds).padStart(2, "0");
-}
-
 
   const timerInterval = setInterval(updateCountdown, 1000);
   updateCountdown();
@@ -334,3 +328,43 @@ function popBubblesOverTime() {
 
   popNext();
 }
+
+// === BUBBLE REPLACEMENT LOGIC (1 every 8s) ===
+const bubbleContainer = document.getElementById("bubble-container");
+const allImagePaths = [
+  "image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg",
+  "image6.jpg", "image7.jpg", "image8.jpg", "image9.jpg", "image10.jpg"
+];
+
+let imageQueueIndex = 5;
+setInterval(() => {
+  const activeBubbles = document.querySelectorAll(".bubble");
+  if (activeBubbles.length === 0) return;
+
+  const bubbleToReplace = activeBubbles[Math.floor(Math.random() * activeBubbles.length)];
+  bubbleToReplace.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+  bubbleToReplace.style.transform = "scale(1.5)";
+  bubbleToReplace.style.opacity = "0";
+
+  const parent = bubbleToReplace.parentElement;
+  const nextImg = document.createElement("img");
+  nextImg.src = allImagePaths[imageQueueIndex % allImagePaths.length];
+  nextImg.classList.add("bubble");
+  parent.appendChild(nextImg);
+
+  setTimeout(() => {
+    bubbleToReplace.remove();
+
+    bubbleStates.push({
+      el: nextImg,
+      x: Math.random() * (window.innerWidth - 100),
+      y: Math.random() * (window.innerHeight - 100),
+      dx: (Math.random() - 0.5) * speed * 2,
+      dy: (Math.random() - 0.5) * speed * 2,
+      cooldown: 0
+    });
+
+  }, 300);
+
+  imageQueueIndex++;
+}, 8000);
