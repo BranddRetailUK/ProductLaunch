@@ -128,10 +128,41 @@ function startCountdown(launchTime) {
     `;
 
     const btn = document.getElementById("buy-now-button");
-    setTimeout(() => {
-      btn.style.opacity = "1";
-      btn.style.transform = "scale(1)";
-    }, 100);
+setTimeout(() => {
+  btn.style.opacity = "1";
+  btn.style.transform = "scale(1)";
+
+  // 🎉 Enhanced particle burst
+  const particleContainer = document.getElementById("buy-now-particles");
+  for (let i = 0; i < 40; i++) {
+    const p = document.createElement("div");
+    p.className = "particle";
+
+    // Random color: white, gold, or semi-transparent gold
+    const colors = ["#ffffff", "#ffd700", "rgba(255,215,0,0.6)"];
+    p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+    // Random size
+    const size = 6 + Math.random() * 10;
+    p.style.width = `${size}px`;
+    p.style.height = `${size}px`;
+
+    // Random position
+    p.style.left = "0px";
+    p.style.top = "0px";
+
+    const angle = Math.random() * 2 * Math.PI;
+    const radius = 100 + Math.random() * 100; // up to 200px
+    p.style.setProperty("--x", `${Math.cos(angle) * radius}px`);
+    p.style.setProperty("--y", `${Math.sin(angle) * radius}px`);
+
+    particleContainer.appendChild(p);
+    setTimeout(() => p.remove(), 2500); // stay longer
+  }
+
+}, 100);
+
+
 
   }, 2000);
 
