@@ -598,7 +598,7 @@ button:hover {
   left: 50%;
   width: 0;
   height: 0;
-  z-index: 999;
+  z-index: 0;
   pointer-events: none;
 }
 
@@ -624,3 +624,33 @@ button:hover {
   }
 }
 
+#buy-now-sparkles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.sparkle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: white;
+  opacity: 0.9;
+  animation: driftDown 3s ease-out forwards;
+}
+
+@keyframes driftDown {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), var(--y)) scale(0.7);
+    opacity: 0;
+  }
+}

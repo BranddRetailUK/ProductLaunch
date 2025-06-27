@@ -138,16 +138,13 @@ setTimeout(() => {
     const p = document.createElement("div");
     p.className = "particle";
 
-    // Random color: white, gold, or semi-transparent gold
-    const colors = ["#ffffff", "#ffd700", "rgba(255,215,0,0.6)"];
+    const colors = ["#ffffff", "#ffd700", "rgba(255, 232, 25, 0.6)"];
     p.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
 
-    // Random size
     const size = 6 + Math.random() * 10;
     p.style.width = `${size}px`;
     p.style.height = `${size}px`;
 
-    // Random position
     p.style.left = "0px";
     p.style.top = "0px";
 
@@ -160,9 +157,51 @@ setTimeout(() => {
     setTimeout(() => p.remove(), 2500); // stay longer
   }
 
-}, 100);
+  // ✨ Sparkle drift (starts 0.5s after burst)
+  setTimeout(() => {
+    const sparkleContainer = document.getElementById("buy-now-sparkles");
+    for (let i = 0; i < 30; i++) {
+      const s = document.createElement("div");
+      s.className = "sparkle";
+      s.style.backgroundColor = Math.random() > 0.5 ? "#ffffff" : "#ffd700";
+
+      const size = 3 + Math.random() * 4;
+      s.style.width = `${size}px`;
+      s.style.height = `${size}px`;
+
+      const x = (Math.random() - 0.5) * 300;
+      const y = 100 + Math.random() * 100;
+      s.style.setProperty("--x", `${x}px`);
+      s.style.setProperty("--y", `${y}px`);
+
+      sparkleContainer.appendChild(s);
+      setTimeout(() => s.remove(), 3000);
+    }
+  }, 500); // end sparkle drift
+
+}, 100); // end Buy Now animation trigger (inside setTimeout(..., 2000))
 
 
+setTimeout(() => {
+  const sparkleContainer = document.getElementById("buy-now-sparkles");
+  for (let i = 0; i < 30; i++) {
+    const s = document.createElement("div");
+    s.className = "sparkle";
+    s.style.backgroundColor = Math.random() > 0.5 ? "#ffffff" : "#ffd700";
+
+    const size = 3 + Math.random() * 4;
+    s.style.width = `${size}px`;
+    s.style.height = `${size}px`;
+
+    const x = (Math.random() - 0.5) * 300;
+    const y = 100 + Math.random() * 100;
+    s.style.setProperty("--x", `${x}px`);
+    s.style.setProperty("--y", `${y}px`);
+
+    sparkleContainer.appendChild(s);
+    setTimeout(() => s.remove(), 3000);
+  }
+}, 500);
 
   }, 2000);
 
