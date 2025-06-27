@@ -449,6 +449,8 @@ button:hover {
     padding: 20px 30px;
     margin-top: 20px;
     display: flex;
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     font-weight: bold;
     justify-content: center;
     align-items: center;
@@ -500,8 +502,8 @@ button:hover {
 
 @media (max-width: 600px) {
   .bubble { 
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
   }
 }
 
