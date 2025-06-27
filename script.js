@@ -42,34 +42,108 @@ function startCountdown(launchTime) {
   }
 
   function updateCountdown() {
-    const now = Date.now();
-    const distance = launchTime - now;
+  const now = Date.now();
+  const distance = launchTime - now;
 
-    if (distance <= 0) {
-      clearInterval(timerInterval);
-      subtlyEnhanceParticles();
 
-      countdownEl?.classList.remove("countdown-flash");
-      document.body.classList.remove("shake-screen");
 
-      countdownEl?.classList.add("countdown-pop");
-      setTimeout(() => countdownEl?.remove(), 600);
 
-      headlineEl?.classList.add("fade-slide-up", "headline");
-      logoEl?.classList.add("fade-slide-up", "logo");
+  if (distance <= 0) {
+  clearInterval(timerInterval);
+  clearInterval(bubbleRespawnInterval);
+  document.querySelectorAll(".bubble").forEach((b) => b.remove());
+  subtlyEnhanceParticles();
 
-      quoteWrapper?.classList.add("fade-out");
-      setTimeout(() => {
-        quoteWrapper?.classList.add("hidden");
-      }, 1000);
+  // 🚨 White flash
+  const flash = document.getElementById("screen-flash");
+  flash.style.opacity = "1";
+  setTimeout(() => flash.style.opacity = "0", 200);
 
-      setTimeout(() => {
-        buyNowWrapper?.classList.remove("hidden");
-        buyNowWrapper?.classList.add("visible");
-        loadShopifyBuyButton();
-      }, 1200);
-      return;
-    }
+  // 🌀 Zoom burst
+  document.body.classList.add("zoom-burst");
+  setTimeout(() => document.body.classList.remove("zoom-burst"), 600);
+
+  // 🔊 Play sound
+  document.getElementById("launch-sfx")?.play().catch(() => {});
+
+  // 💥 Pop countdown digits
+  document.querySelectorAll("#countdown span").forEach(span => {
+    span.style.display = "inline-block";
+    span.style.animation = "popDigit 0.4s ease forwards";
+  });
+
+  countdownEl?.classList.remove("countdown-flash");
+  document.body.classList.remove("shake-screen");
+
+  countdownEl?.classList.add("countdown-pop");
+  setTimeout(() => countdownEl?.remove(), 600);
+
+  headlineEl?.classList.add("fade-slide-up", "headline");
+  logoEl?.classList.add("fade-slide-up", "logo");
+
+  quoteWrapper?.classList.add("fade-out");
+  setTimeout(() => quoteWrapper?.classList.add("hidden"), 1000);
+
+  // 🔥 Add launch headline
+  const banner = document.createElement("div");
+  banner.className = "launch-banner";
+  document.querySelector(".container")?.appendChild(banner);
+
+  // 🛒 Buy button (already styled & pulsing)
+  setTimeout(() => {
+    buyNowWrapper?.classList.remove("hidden");
+    buyNowWrapper?.classList.add("visible");
+
+    buyNowWrapper.innerHTML = `
+      <a href="https://ggapparel.co.uk/products/og"
+         id="buy-now-button"
+         target="_blank"
+         style="
+           display: inline-block;
+           padding: 16px 36px;
+           font-size: 1.2rem;
+           font-weight: bold;
+           background-color: #000;
+           color: #fff;
+           text-decoration: none;
+           border-radius: 10px;
+           opacity: 0;
+           transform: scale(0.8);
+           transition: all 0.3s ease;
+           animation: pulse 2s infinite ease-in-out;
+         "
+         onmouseover="this.style.backgroundColor='#fff'; this.style.color='#000'; this.style.transform='scale(1.05)'"
+         onmouseout="this.style.backgroundColor='#000'; this.style.color='#fff'; this.style.transform='scale(1)'"
+      >
+        BUY NOW
+      </a>
+
+      <style>
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      </style>
+    `;
+
+    const btn = document.getElementById("buy-now-button");
+    setTimeout(() => {
+      btn.style.opacity = "1";
+      btn.style.transform = "scale(1)";
+    }, 100);
+
+  }, 2000);
+
+  return;
+}
+
+
+
+
+
+
+
 
     const secondsLeft = Math.floor(distance / 1000);
 
@@ -119,48 +193,7 @@ bgMusic.volume = 0.2;
 
 particlesJS.load("particles-js", "particles.json");
 
-function ShopifyBuyInit() {
-  const client = ShopifyBuy.buildClient({
-    domain: "ggappareluk.myshopify.com",
-    storefrontAccessToken: "51b8ad7c0b38bfa0b9ddab950170f7ca"
-  });
 
-  ShopifyBuy.UI.onReady(client).then((ui) => {
-    ui.createComponent("product", {
-      id: "10220096815431",
-      node: document.getElementById("buy-now-wrapper"),
-      moneyFormat: "%C2%A3{{amount}}",
-      options: {
-        product: {
-          buttonDestination: "checkout",
-          contents: { img: true, title: true, price: true },
-          text: { button: "BUY NOW" },
-          styles: {
-            button: {
-              backgroundColor: "#ffffff",
-              color: "#1c1c1c",
-              fontSize: "1.2rem",
-              padding: "14px 30px",
-              borderRadius: "8px",
-              fontWeight: "bold",
-              transition: "transform 0.2s ease-in-out"
-            },
-            buttonHover: { transform: "scale(1.05)" }
-          }
-        },
-        cart: { startOpen: false }
-      }
-    });
-  });
-}
-
-function loadShopifyBuyButton() {
-  const script = document.createElement("script");
-  script.src = "https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js";
-  script.async = true;
-  script.onload = ShopifyBuyInit;
-  document.head.appendChild(script);
-}
 
 // === Randomized Bubble Spawning ===
 const imageSources = [
@@ -308,7 +341,8 @@ const allImagePaths = [
 ];
 
 let imageQueueIndex = 0;
-setInterval(() => {
+let bubbleRespawnInterval = null;
+bubbleRespawnInterval = setInterval(() => {
   const activeBubbles = document.querySelectorAll(".bubble");
   if (activeBubbles.length === 0) return;
 

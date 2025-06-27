@@ -547,3 +547,46 @@ button:hover {
   animation: countdownPop 0.5s ease forwards;
 }
 
+#screen-flash {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9999;
+  transition: opacity 0.2s ease;
+}
+
+.zoom-burst {
+  animation: zoomBurst 0.6s ease-in-out;
+}
+@keyframes zoomBurst {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.countdown-pop span {
+  display: inline-block;
+  animation: popDigit 0.4s ease forwards;
+}
+@keyframes popDigit {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.6); opacity: 0.5; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+.launch-banner {
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  text-align: center;
+  margin-top: 40px;
+  animation: fadeSlideIn 1s ease forwards;
+}
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
