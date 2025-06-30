@@ -14,9 +14,9 @@ function startCountdown(launchTime) {
   const secondsEl = document.getElementById("seconds");
 
   const quotes = [
-    "“Built to stand out from the crowd, engineered with launch day in mind — your moment begins now.”",
-    "“Designed for legends — crafted to elevate every moment you wear it.”",
-    "“You don’t follow trends — you set the tone, define the moment, and launch what’s next.”"
+    "“Only 50 Hoodies. Random giveaways. Big prizes.”",
+    "“Own a numbered hoodie? You’re in. As we grow, so does the value — and the rewards.”",
+    "“Only 50 Hoodies. Random giveaways. Big prizes.”"
   ];
 
   let currentQuoteIndex = 0;
