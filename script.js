@@ -13,9 +13,9 @@ function startCountdown(launchTime) {
   const minutesEl = document.getElementById("minutes");
   const secondsEl = document.getElementById("seconds");
 
-  const quotes = [
-    "“Signature contrast hoodie drops first — only 30 pieces. Full collection unlocks after they’re gone.”",
-    "“Early birds get the numbered hoodie; the rest of the lineup follows right after.”",
+const quotes = [
+    "“Swampies get first shot at the signature contrast hoodie — only 30 pieces. Full collection unlocks after they’re gone.”",
+    "“Early birds grab the limited hoodie; the rest of the lineup follows right after.”",
     "“Bubbles preview the collection — more looks unlock at launch.”"
   ];
 
