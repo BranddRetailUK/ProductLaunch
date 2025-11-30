@@ -14,9 +14,9 @@ function startCountdown(launchTime) {
   const secondsEl = document.getElementById("seconds");
 
   const quotes = [
-    "“Cola Plays goes live. New single ‘Need Your Touch’ hits first.”",
-    "“Limited capsule unlocks with the countdown — early birds get the rarest pieces.”",
-    "“Bubbles rotate through fan art. Send yours in to be featured when we launch.”"
+    "“Signature contrast hoodie drops first — only 30 pieces. Full collection unlocks after they’re gone.”",
+    "“Early birds get the numbered hoodie; the rest of the lineup follows right after.”",
+    "“Bubbles preview the collection — more looks unlock at launch.”"
   ];
 
   let currentQuoteIndex = 0;
@@ -88,7 +88,7 @@ function startCountdown(launchTime) {
   // 🔥 Add launch headline
   const banner = document.createElement("div");
   banner.className = "launch-banner";
-  banner.textContent = "Cola Plays is live";
+  banner.textContent = "Signature hoodie is live";
   document.querySelector(".container")?.appendChild(banner);
 
   // 🛒 Buy button (already styled & pulsing)
@@ -121,7 +121,7 @@ function startCountdown(launchTime) {
          onmouseover="this.style.transform='scale(1.04) translateY(-2px)'; this.style.boxShadow='0 14px 40px rgba(255,95,122,0.35), 0 10px 28px rgba(92,243,197,0.25)'"
          onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 18px 45px rgba(255,95,122,0.45), 0 12px 38px rgba(92,243,197,0.32)'"
       >
-        JOIN THE DROP
+        CLAIM THE HOODIE
       </a>
 
       <style>

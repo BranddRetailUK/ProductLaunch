@@ -489,6 +489,41 @@ button:hover {
 
 
 @media (max-width: 600px) {
+  .container {
+    margin: 28px auto 0;
+    padding: 22px 18px 28px;
+    border-radius: 22px;
+  }
+
+  .logo {
+    width: 140px;
+    margin-bottom: 10px;
+  }
+
+  .eyebrow {
+    font-size: 0.8rem;
+    gap: 8px;
+  }
+
+  .eyebrow::before,
+  .eyebrow::after {
+    width: 18px;
+  }
+
+  .headline {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .lede {
+    font-size: 0.98rem;
+    margin-bottom: 18px;
+  }
+
+  #bubble-container {
+    filter: none;
+  }
+
   .countdown {
     transform: translateY(-20px);
   }
@@ -560,7 +595,7 @@ button:hover {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 1;
+  z-index: 2; /* above overlay blur, under main content */
 }
 
 .bubble {
@@ -570,15 +605,14 @@ button:hover {
   border-radius: 50%;
   object-fit: cover;
   pointer-events: none;
-  opacity: 0.9;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  opacity: 1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow:
     0 10px 40px rgba(255, 95, 122, 0.28),
     0 14px 40px rgba(92, 243, 197, 0.18),
     0 0 20px rgba(255, 255, 255, 0.16);
-  filter: saturate(1.05) contrast(1.04);
-  mix-blend-mode: screen;
+  filter: brightness(1.25) contrast(1.08) saturate(1.12);
 }
 
 @media (max-width: 600px) {
