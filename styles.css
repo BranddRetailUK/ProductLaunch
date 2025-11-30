@@ -595,7 +595,8 @@ button:hover {
   width: 100vw;
   height: 100vh;
   pointer-events: none;
-  z-index: 2; /* above overlay blur, under main content */
+  z-index: 0; /* sit behind overlay/content */
+  filter: blur(0.6px);
 }
 
 .bubble {
@@ -607,11 +608,11 @@ button:hover {
   pointer-events: none;
   opacity: 1;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   box-shadow:
-    0 10px 40px rgba(255, 95, 122, 0.28),
-    0 14px 40px rgba(92, 243, 197, 0.18),
-    0 0 20px rgba(255, 255, 255, 0.16);
+    0 10px 40px rgba(255, 95, 122, 0.2),
+    0 14px 40px rgba(92, 243, 197, 0.16),
+    0 0 18px rgba(255, 255, 255, 0.14);
   filter: brightness(1.25) contrast(1.08) saturate(1.12);
 }
 
