@@ -1,11 +1,11 @@
 {
   "particles": {
     "number": { "value": 50 },
-    "color": { "value": "#ffffff" },
+    "color": { "value": ["#ff5f7a", "#5cf3c5", "#ffd166"] },
     "shape": { "type": "circle" },
     "opacity": { "value": 0.6 },
     "size": { "value": 3 },
-    "line_linked": { "enable": true, "distance": 100, "color": "#ffffff", "opacity": 0.2, "width": 1.5 },
+    "line_linked": { "enable": true, "distance": 110, "color": "#ff5f7a", "opacity": 0.25, "width": 1.2 },
     "move": { "enable": true, "speed": 0.8 }
   },
   "interactivity": {

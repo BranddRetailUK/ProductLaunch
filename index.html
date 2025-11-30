@@ -3,59 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>SLOW | The OG Hoodie</title>
+  <title>Cola Plays | Launch Countdown</title>
   <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
-  <style>
-    .headline {
-      text-align: center;
-      font-size: 2.8rem;
-      font-weight: 600;
-      margin-top: 40px;
-      position: relative;
-      z-index: 2;
-      font-family: 'Quicksand', sans-serif;
-    }
-
-    .headline span {
-      opacity: 0;
-      transform: scale(0.8);
-      display: inline-block;
-      animation: typeIn 0.4s ease-out forwards;
-    }
-
-    @keyframes typeIn {
-      to {
-        opacity: 1;
-        transform: scale(1);
-      }
-    }
-
-    .headline span:nth-child(11) { animation-delay: 0s; }
-    .headline span:nth-child(10),
-    .headline span:nth-child(12) { animation-delay: 0.05s; }
-    .headline span:nth-child(9),
-    .headline span:nth-child(13) { animation-delay: 0.1s; }
-    .headline span:nth-child(8),
-    .headline span:nth-child(14) { animation-delay: 0.15s; }
-    .headline span:nth-child(7),
-    .headline span:nth-child(15) { animation-delay: 0.2s; }
-    .headline span:nth-child(6),
-    .headline span:nth-child(16) { animation-delay: 0.25s; }
-    .headline span:nth-child(5),
-    .headline span:nth-child(17) { animation-delay: 0.3s; }
-    .headline span:nth-child(4),
-    .headline span:nth-child(18) { animation-delay: 0.35s; }
-    .headline span:nth-child(3),
-    .headline span:nth-child(19) { animation-delay: 0.4s; }
-    .headline span:nth-child(2),
-    .headline span:nth-child(20) { animation-delay: 0.45s; }
-    .headline span:nth-child(1),
-    .headline span:nth-child(21) { animation-delay: 0.5s; }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:wght@600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div id="buy-now-particles"></div>
   <div id="particles-js"></div>
   <div id="screen-flash"></div>
   <div id="buy-now-particles"></div>
@@ -66,18 +18,23 @@
   <!-- ✅ Bubble container: 8 images x2, randomized via JS -->
   <div id="bubble-container"></div>
 
-  <audio id="bg-music" src="assets/ambient.mp3" preload="auto" loop></audio>
+  <audio id="bg-music" src="ambient.mp3" preload="auto" loop></audio>
 
   <div class="overlay">
     <div class="container">
-      <img src="assets/logo.png" alt="Logo" class="logo" />
+      <div class="eyebrow">Cola Plays • Premiere Countdown</div>
+      <img src="https://cdn.shopify.com/s/files/1/0841/7545/4535/files/COLA_CIRCLE.png?v=1764496951" alt="Cola Plays logo" class="logo" />
 
       <h1 class="headline">
-        <span>T</span><span>h</span><span>e</span><span> </span>
-        <span>O</span><span>G</span><br />
-        <span>H</span><span>o</span><span>o</span><span>d</span><span>i</span><span>e</span><span> </span>
-        <span>L</span><span>a</span><span>u</span><span>n</span><span>c</span><span>h</span>
+        <span>C</span><span>o</span><span>l</span><span>a</span><span> </span>
+        <span>P</span><span>l</span><span>a</span><span>y</span><span>s</span><br />
+        <span>L</span><span>i</span><span>v</span><span>e</span><span> </span>
+        <span>D</span><span>r</span><span>o</span><span>p</span>
       </h1>
+
+      <p class="lede">
+        New single “Need Your Touch” and the first Cola Plays capsule land here. Keep the bubbles rolling until we go live.
+      </p>
 
       <div id="countdown" class="countdown">
         <div class="countdown-block">

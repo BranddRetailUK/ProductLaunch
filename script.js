@@ -14,9 +14,9 @@ function startCountdown(launchTime) {
   const secondsEl = document.getElementById("seconds");
 
   const quotes = [
-    "“Only 50 Hoodies. Random giveaways. Big prizes.”",
-    "“Own a numbered hoodie? You’re in. As we grow, so does the value — and the rewards.”",
-    "“Only 50 Hoodies. Random giveaways. Big prizes.”"
+    "“Cola Plays goes live. New single ‘Need Your Touch’ hits first.”",
+    "“Limited capsule unlocks with the countdown — early birds get the rarest pieces.”",
+    "“Bubbles rotate through fan art. Send yours in to be featured when we launch.”"
   ];
 
   let currentQuoteIndex = 0;
@@ -35,8 +35,9 @@ function startCountdown(launchTime) {
 
   function subtlyEnhanceParticles() {
     const pJS = pJSDom[0].pJS;
-    pJS.particles.color.value = "#FFD700";
-    pJS.particles.move.speed = 1.5;
+    pJS.particles.color.value = "#FF5F7A";
+    pJS.particles.line_linked.color = "#5CF3C5";
+    pJS.particles.move.speed = 1.6;
     pJS.particles.opacity.value = 0.9;
     pJS.fn.particlesRefresh();
   }
@@ -87,6 +88,7 @@ function startCountdown(launchTime) {
   // 🔥 Add launch headline
   const banner = document.createElement("div");
   banner.className = "launch-banner";
+  banner.textContent = "Cola Plays is live";
   document.querySelector(".container")?.appendChild(banner);
 
   // 🛒 Buy button (already styled & pulsing)
@@ -95,31 +97,35 @@ function startCountdown(launchTime) {
     buyNowWrapper?.classList.add("visible");
 
     buyNowWrapper.innerHTML = `
-      <a href="https://ggapparel.co.uk/products/og"
+      <a href="https://colaplays.com"
          id="buy-now-button"
          target="_blank"
          style="
-           display: inline-block;
+           display: inline-flex;
+           align-items: center;
+           gap: 10px;
            padding: 16px 36px;
-           font-size: 1.2rem;
-           font-weight: bold;
-           background-color: #000;
-           color: #fff;
+           font-size: 1.15rem;
+           font-weight: 800;
+           letter-spacing: 0.04em;
+           background: linear-gradient(120deg, #ff5f7a, #ffd166, #5cf3c5);
+           color: #060812;
            text-decoration: none;
-           border-radius: 10px;
+           border-radius: 14px;
            opacity: 0;
-           transform: scale(0.8);
-           transition: all 0.3s ease;
-           animation: pulse 2s infinite ease-in-out;
+           transform: scale(0.86);
+           box-shadow: 0 18px 45px rgba(255, 95, 122, 0.45), 0 12px 38px rgba(92, 243, 197, 0.32);
+           transition: all 0.35s ease;
+           animation: pulseCTA 2s infinite ease-in-out;
          "
-         onmouseover="this.style.backgroundColor='#fff'; this.style.color='#000'; this.style.transform='scale(1.05)'"
-         onmouseout="this.style.backgroundColor='#000'; this.style.color='#fff'; this.style.transform='scale(1)'"
+         onmouseover="this.style.transform='scale(1.04) translateY(-2px)'; this.style.boxShadow='0 14px 40px rgba(255,95,122,0.35), 0 10px 28px rgba(92,243,197,0.25)'"
+         onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 18px 45px rgba(255,95,122,0.45), 0 12px 38px rgba(92,243,197,0.32)'"
       >
-        BUY NOW
+        JOIN THE DROP
       </a>
 
       <style>
-        @keyframes pulse {
+        @keyframes pulseCTA {
           0% { transform: scale(1); }
           50% { transform: scale(1.05); }
           100% { transform: scale(1); }
@@ -267,8 +273,19 @@ particlesJS.load("particles-js", "particles.json");
 
 // === Randomized Bubble Spawning ===
 const imageSources = [
-  "assets/image1.jpg", "assets/image2.jpg", "assets/image3.jpg", "assets/image4.jpg",
-  "assets/image5.jpg", "assets/image6.jpg", "assets/image7.jpg", "assets/image8.jpg"
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/1_a3d0a226-a53e-4ee7-92e4-77ed48a1e3ce.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/2_a6f2ffeb-4998-4714-9e39-0e83d218c9ac.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/3_4893573c-d04b-48af-bfa9-3392b0122307.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/4_618423a0-9e27-4891-98f3-51ee4ae15ddf.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/5_c96dd24a-9eaa-418d-8e07-3b1e6bac4811.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/6_344a3dd6-d210-4055-b178-dd6942f3de1a.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/7_a22edf07-be31-4aa4-a53b-b5678efe0a82.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/8_f0d6fb07-ec13-43eb-982b-c3501f429d07.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/9_9ac02cf6-235f-410a-ae42-464fc478f802.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/10_8b7d8431-a5e5-4491-a88f-ebca7c346688.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/11_dbfe5ddb-20d6-4a79-aca5-6a30ffb4f943.jpg?v=1764498131",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/12_44a45bbd-78f2-44fa-bfc7-9106081d4350.jpg?v=1764498132",
+  "https://cdn.shopify.com/s/files/1/0841/7545/4535/files/13_ea1f12f8-8ac9-4aad-9e39-cde21c140296.jpg?v=1764498132"
 ];
 
 let bubbleImages = imageSources.flatMap(src => [src, src]);
@@ -405,10 +422,7 @@ function popBubblesOverTime() {
   popNext();
 }
 
-const allImagePaths = [
-  "assets/image1.jpg", "assets/image2.jpg", "assets/image3.jpg", "assets/image4.jpg", "assets/image5.jpg",
-  "assets/image6.jpg", "assets/image7.jpg", "assets/image8.jpg", "assets/image9.jpg", "assets/image10.jpg"
-];
+const allImagePaths = imageSources;
 
 let imageQueueIndex = 0;
 let bubbleRespawnInterval = null;
@@ -456,4 +470,3 @@ bubbleRespawnInterval = setInterval(() => {
   }, 2400);
 
 }, 6000);
-
