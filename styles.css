@@ -56,7 +56,6 @@ body::after {
 .overlay {
   width: 100%;
   height: 100%;
-  backdrop-filter: blur(4px) saturate(1.05);
   position: absolute;
   top: 0;
   left: 0;
@@ -73,6 +72,8 @@ body::after {
   border: 1px solid var(--line);
   border-radius: 28px;
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
+  backdrop-filter: blur(10px) saturate(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
   box-shadow:
     0 30px 120px rgba(0, 0, 0, 0.55),
     0 18px 40px rgba(255, 95, 122, 0.12),
@@ -596,7 +597,6 @@ button:hover {
   height: 100vh;
   pointer-events: none;
   z-index: 0; /* sit behind overlay/content */
-  filter: blur(0.6px);
 }
 
 .bubble {
