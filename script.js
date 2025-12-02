@@ -97,7 +97,7 @@ const quotes = [
     buyNowWrapper?.classList.add("visible");
 
     buyNowWrapper.innerHTML = `
-      <a href="https://colaplays.com"
+      <a href="https://ggapparel.co.uk/products/cola-plays-signature-contrast-hoodie"
          id="buy-now-button"
          target="_blank"
          style="
