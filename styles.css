@@ -64,6 +64,7 @@ body::after {
 }
 
 .container {
+  width: min(640px, calc(100% - 48px));
   text-align: center;
   max-width: 640px;
   margin: 60px auto 0 auto;
@@ -491,14 +492,15 @@ button:hover {
 
 @media (max-width: 600px) {
   .container {
-    margin: 28px auto 0;
-    padding: 22px 18px 28px;
+    width: calc(100% - 48px);
+    margin: 24px auto 0;
+    padding: 20px 16px 26px;
     border-radius: 22px;
   }
 
   .logo {
-    width: 140px;
-    margin-bottom: 10px;
+    width: 136px;
+    margin: 4px auto 12px;
   }
 
   .eyebrow {
@@ -542,8 +544,8 @@ button:hover {
   }
 
   .logo {
-    margin-top: -20px;
-    max-width: 80%;
+    margin-top: 0;
+    max-width: 78%;
   }
 
   #quote-wrapper {
@@ -613,7 +615,7 @@ button:hover {
     0 10px 40px rgba(255, 95, 122, 0.2),
     0 14px 40px rgba(92, 243, 197, 0.16),
     0 0 18px rgba(255, 255, 255, 0.14);
-  filter: brightness(1.25) contrast(1.08) saturate(1.12);
+  filter: brightness(1.5) contrast(1.05) saturate(1.12);
 }
 
 @media (max-width: 600px) {
