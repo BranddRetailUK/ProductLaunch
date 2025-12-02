@@ -277,13 +277,13 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 20px;
   background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
   backdrop-filter: blur(14px) saturate(1.1);
   -webkit-backdrop-filter: blur(14px) saturate(1.1);
-  padding: 24px 40px;
+  padding: 20px 32px;
   border-radius: 24px;
-  margin-top: 26px;
+  margin-top: 30px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
   position: relative;
   z-index: 2;
@@ -296,7 +296,7 @@ button:hover {
   flex-direction: column;
   align-items: center;
   color: #ffffff;
-  padding: 8px 14px;
+  padding: 8px 12px;
   border-radius: 14px;
   background: radial-gradient(circle at 10% 10%, rgba(255, 95, 122, 0.14), rgba(92, 243, 197, 0.06));
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -307,6 +307,7 @@ button:hover {
   font-size: 2.6rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+  line-height: 1;
   text-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
@@ -496,6 +497,7 @@ button:hover {
     margin: 24px auto 0;
     padding: 20px 16px 26px;
     border-radius: 22px;
+    animation: none;
   }
 
   .logo {
@@ -514,13 +516,19 @@ button:hover {
   }
 
   .headline {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.3rem;
+    margin-bottom: 12px;
+  }
+
+  .headline span {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
   }
 
   .lede {
-    font-size: 0.98rem;
-    margin-bottom: 18px;
+    display: none;
+    margin: 0;
   }
 
   #bubble-container {
@@ -559,15 +567,15 @@ button:hover {
     position: relative;
     overflow: hidden;
     border-radius: 18px;
-    padding: 18px 22px;
-    margin-top: 16px;
+    padding: 16px 18px;
+    margin-top: 18px;
     display: flex;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     font-weight: bold;
     justify-content: center;
     align-items: center;
-    gap: 16px;
+    gap: 14px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: none;
     will-change: transform;
@@ -575,18 +583,27 @@ button:hover {
 
   .countdown-block {
     margin: 0;
-    padding: 0;
+    padding: 6px 10px;
   }
 
   .countdown-block span {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
     margin: 0;
+    line-height: 1.05;
   }
 
   .countdown-block label {
-    font-size: 0.7rem;
-    margin-top: 2px;
+    font-size: 0.72rem;
+    margin-top: 4px;
     line-height: 1;
+  }
+
+  .colon {
+    margin: 0 4px;
+  }
+
+  .quote-placeholder {
+    margin: 16px auto 8px;
   }
 }
 
