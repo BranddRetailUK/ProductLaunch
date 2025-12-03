@@ -495,7 +495,7 @@ button:hover {
   .container {
     width: calc(100% - 48px);
     margin: 24px auto 0;
-    padding: 20px 16px 26px;
+    padding: 16px 14px 20px;
     border-radius: 22px;
     animation: none;
   }
@@ -517,7 +517,7 @@ button:hover {
 
   .headline {
     font-size: 2.3rem;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
   .headline span {
@@ -567,15 +567,18 @@ button:hover {
     position: relative;
     overflow: hidden;
     border-radius: 18px;
-    padding: 16px 18px;
-    margin-top: 18px;
+    padding: 14px 16px;
+    margin-top: 22px;
+    width: calc(100% - 32px);
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     backdrop-filter: blur(3px);
     -webkit-backdrop-filter: blur(3px);
     font-weight: bold;
     justify-content: center;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     transition: none;
     will-change: transform;
@@ -583,11 +586,11 @@ button:hover {
 
   .countdown-block {
     margin: 0;
-    padding: 6px 10px;
+    padding: 6px 8px;
   }
 
   .countdown-block span {
-    font-size: 2.1rem;
+    font-size: 1.9rem;
     margin: 0;
     line-height: 1.05;
   }
@@ -599,11 +602,17 @@ button:hover {
   }
 
   .colon {
-    margin: 0 4px;
+    margin: 0 3px;
   }
 
   .quote-placeholder {
     margin: 16px auto 8px;
+  }
+}
+
+@media (max-width: 600px) {
+  .overlay {
+    background: linear-gradient(135deg, rgba(12, 18, 36, 0.74), rgba(6, 8, 18, 0.74));
   }
 }
 
@@ -632,13 +641,14 @@ button:hover {
     0 10px 40px rgba(255, 95, 122, 0.2),
     0 14px 40px rgba(92, 243, 197, 0.16),
     0 0 18px rgba(255, 255, 255, 0.14);
-  filter: brightness(1.5) contrast(1.05) saturate(1.12);
+  filter: brightness(1.6) contrast(1.03) saturate(1.12);
 }
 
 @media (max-width: 600px) {
   .bubble { 
     width: 78px;
     height: 78px;
+    filter: brightness(1.7) contrast(1.02) saturate(1.12);
   }
 }
 
